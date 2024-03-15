@@ -1,3 +1,5 @@
+import datetime
+
 from data import db_session
 from flask import Flask
 
@@ -9,7 +11,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 def main():
-    db_session.global_init("db/blogs.db")
+    db_session.global_init("db/blogs.sqlite")
     session = db_session.create_session()
     # user_1 = User()
     #
@@ -52,7 +54,7 @@ def main():
     # user_4.email = 'eva_krop@mars.org'
     #
     # session.add_all([user_2, user_3, user_4])
-
+    #
     # job_1 = Jobs()
     # job_1.team_leader = 1
     # job_1.job = 'deployment of residential modules 1 and 2'
@@ -84,7 +86,7 @@ def main():
     # )
     # session.execute(sql)
     # session.commit()
-
+    print(session.query(Department).all()[0].users)
     app.run()
 
 

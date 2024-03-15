@@ -19,7 +19,9 @@ class User(SqlAlchemyBase):
     email: Mapped[Optional[str]] = mapped_column(unique=True)
     hashed_password: Mapped[Optional[str]]
     modified_date: Mapped[Optional[datetime.datetime]]
-    departments: Mapped['Department'] = relationship(back_populates='members')
+    dep_id: Mapped[Optional[int]] = mapped_column(ForeignKey('departments.id'))
+    department: Mapped['Department'] = relationship(back_populates='users', foreign_keys=[dep_id],
+                                                    uselist=True)
     jobs: Mapped['Jobs'] = relationship(back_populates='user')
 
     def __repr__(self) -> str:
