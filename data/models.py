@@ -2,8 +2,7 @@ import datetime
 from typing import Optional
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
-
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from data.db_session import SqlAlchemyBase
 
 
@@ -20,6 +19,11 @@ class User(SqlAlchemyBase):
     email: Mapped[Optional[str]] = mapped_column(unique=True)
     hashed_password: Mapped[Optional[str]]
     modified_date: Mapped[Optional[datetime.datetime]]
+    departments: Mapped['Department'] = relationship(back_populates='members')
+    jobs: Mapped['Jobs'] = relationship(back_populates='user')
+
+    def __repr__(self) -> str:
+        return f'<Colonist> {self.id} {self.name} {self.surname}'
 
 
 class Jobs(SqlAlchemyBase):
@@ -33,3 +37,7 @@ class Jobs(SqlAlchemyBase):
     start_date: Mapped[Optional[datetime.datetime]]
     end_date: Mapped[Optional[datetime.datetime]]
     is_finished: Mapped[Optional[bool]]
+    user: Mapped['User'] = relationship(back_populates='jobs')
+
+    def __repr__(self) -> str:
+        return f'<Job> {self.job}'

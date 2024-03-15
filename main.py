@@ -1,16 +1,15 @@
-import datetime
-
 from data import db_session
 from flask import Flask
 
-from data.models.models import User, Jobs
+from data.models import User, Jobs
+from data.department import Department
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 def main():
-    db_session.global_init("db/blogs.sqlite")
+    db_session.global_init("db/blogs.db")
     session = db_session.create_session()
     # user_1 = User()
     #
@@ -54,17 +53,37 @@ def main():
     #
     # session.add_all([user_2, user_3, user_4])
 
-    job_1 = Jobs()
-    job_1.team_leader = 1
-    job_1.job = 'deployment of residential modules 1 and 2'
-    job_1.work_size = 15
-    job_1.collaborators = '2, 3'
-    job_1.start_date = datetime.datetime.now(datetime.UTC)
-    job_1.is_finished = False
+    # job_1 = Jobs()
+    # job_1.team_leader = 1
+    # job_1.job = 'deployment of residential modules 1 and 2'
+    # job_1.work_size = 15
+    # job_1.collaborators = '2, 3'
+    # job_1.start_date = datetime.datetime.now(datetime.UTC)
+    # job_1.is_finished = False
+    #
+    # session.add(job_1)
+    #
+    # session.commit()
+    # global_init(input())
+    # session = create_session()
 
-    session.add(job_1)
+    # collaborators = dict()
+    # for job_data in session.query(Jobs):
+    #     count = len(job_data.collaborators.split(', '))
+    #     collaborators_list = collaborators.get(count, [])
+    #     collaborators_list.append(job_data.id)
+    #     collaborators[count] = collaborators_list
+    # for user_data in (session.query(User).join(Jobs).filter(Jobs.id.in_(collaborators[max(collaborators)])).all()):
+    #     print(user_data.name, user_data.surname)
 
-    session.commit()
+    # sql = update(User).where(
+    #     User.address == 'module_1',
+    #     User.age < 21
+    # ).values(
+    #     address='module_3'
+    # )
+    # session.execute(sql)
+    # session.commit()
 
     app.run()
 
